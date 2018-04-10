@@ -144,12 +144,13 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
         }
         
         {
-            _labelFileSize = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 40)];
+            //Alexandr's changes
+            /*_labelFileSize = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 100, 40)];
             _labelFileSize.textAlignment = NSTextAlignmentLeft;
             _labelFileSize.font = [UIFont systemFontOfSize:12];
             _labelFileSize.textColor = [UIColor whiteColor];
             _labelFileSize.alpha = 0;
-            [self addSubview:_labelFileSize];
+            [self addSubview:_labelFileSize];*/
             
             _labelDuration = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
             _labelDuration.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
