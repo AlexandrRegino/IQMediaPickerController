@@ -234,6 +234,12 @@
 {
     [super viewWillAppear:animated];
     
+    //Alexandr's changes
+    videoURLs = [[NSMutableArray alloc] init];
+    audioURLs = [[NSMutableArray alloc] init];
+    arrayImagesAttribute = [[NSMutableArray alloc] init];
+    self.buttonSelect.hidden = YES;
+    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self.navigationController setToolbarHidden:YES animated:animated];
     
@@ -855,12 +861,13 @@
 
 - (void)cancelAction:(UIButton *)sender
 {
+    //Alexandr's changes
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
     if ([self.delegate respondsToSelector:@selector(mediaCaptureControllerDidCancel:)])
     {
         [self.delegate mediaCaptureControllerDidCancel:self];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)selectAction:(UIButton *)sender
@@ -1170,12 +1177,53 @@
             
             if (self.allowsCapturingMultipleItems == NO)
             {
-                IQSelectedMediaViewController *controller = [[IQSelectedMediaViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-                controller.videoURLs = videoURLs;
-                controller.audioURLs = audioURLs;
-                controller.arrayImagesAttribute = arrayImagesAttribute;
-                controller.mediaCaptureController = self;
-                [self.navigationController pushViewController:controller animated:YES];
+                //Alexandr's changes
+//                IQSelectedMediaViewController *controller = [[IQSelectedMediaViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+//                controller.videoURLs = videoURLs;
+//                controller.audioURLs = audioURLs;
+//                controller.arrayImagesAttribute = arrayImagesAttribute;
+//                controller.mediaCaptureController = self;
+//                [self.navigationController pushViewController:controller animated:YES];
+                
+                if ([self.delegate respondsToSelector:@selector(mediaCaptureController:didFinishMediaWithInfo:)])
+                {
+                    NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+                    
+                    if ([arrayImagesAttribute count])
+                    {
+                        [info setObject:arrayImagesAttribute forKey:IQMediaTypeImage];
+                    }
+                    
+                    if ([videoURLs count])
+                    {
+                        NSMutableArray *videoMedias = [[NSMutableArray alloc] init];
+                        
+                        for (NSURL *videoURL in videoURLs)
+                        {
+                            NSDictionary *dict = [NSDictionary dictionaryWithObject:videoURL forKey:IQMediaURL];
+                            [videoMedias addObject:dict];
+                        }
+                        
+                        [info setObject:videoMedias forKey:IQMediaTypeVideo];
+                    }
+                    
+                    if ([audioURLs count])
+                    {
+                        NSMutableArray *audioMedias = [[NSMutableArray alloc] init];
+                        
+                        for (NSURL *audioURL in audioURLs)
+                        {
+                            NSDictionary *dict = [NSDictionary dictionaryWithObject:audioURL forKey:IQMediaURL];
+                            [audioMedias addObject:dict];
+                        }
+                        
+                        [info setObject:audioMedias forKey:IQMediaTypeAudio];
+                    }
+                    
+                    [self.delegate mediaCaptureController:self didFinishMediaWithInfo:info];
+                }
+                
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
             else
             {
