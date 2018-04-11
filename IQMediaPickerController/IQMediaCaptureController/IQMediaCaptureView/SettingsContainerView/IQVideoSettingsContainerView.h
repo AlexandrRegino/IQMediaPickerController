@@ -52,6 +52,7 @@
 @property(nonatomic) BOOL hasCamera;
 
 @property(nonatomic) NSTimeInterval duration;
+@property(nonatomic) NSTimeInterval maximumDuration;
 @property(nonatomic) long long fileSize;
 
 @property(nonatomic) BOOL recording;

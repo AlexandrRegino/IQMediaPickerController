@@ -47,7 +47,7 @@
     self = [super init];
     if (self) {
         self.title = @"Composers";
-        self.tabBarItem.image = [UIImage imageNamed:@"composers"];
+        self.tabBarItem.image = [UIImage imageNamed:@"composers" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
 }

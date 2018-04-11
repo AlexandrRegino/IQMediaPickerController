@@ -53,7 +53,7 @@
 -(void)setDuration:(NSTimeInterval)duration
 {
     _duration = duration;
-    _labelDuration.text = [NSString timeStringForTimeInterval:duration forceIncludeHours:YES];
+    _labelDuration.text = [NSString timeStringForTimeInterval:duration maximumDuration:0 forceIncludeHours:YES];
 }
 
 -(void)resetUI

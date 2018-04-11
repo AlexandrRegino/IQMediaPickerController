@@ -48,7 +48,7 @@
     self = [super init];
     if (self) {
         self.title = @"Albums";
-        self.tabBarItem.image = [UIImage imageNamed:@"albums"];
+        self.tabBarItem.image = [UIImage imageNamed:@"albums" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
 }

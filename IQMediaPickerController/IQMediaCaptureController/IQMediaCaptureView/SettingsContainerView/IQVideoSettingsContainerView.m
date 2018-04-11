@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
         //Camera
         {
             _buttonCamera = [UIButton buttonWithType:UIButtonTypeSystem];
-            [_buttonCamera setImage:[UIImage imageNamed:@"IQ_camera_switch"] forState:UIControlStateNormal];
+            [_buttonCamera setImage:[UIImage imageNamed:@"IQ_camera_switch" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             [_buttonCamera addTarget:self action:@selector(cameraAction:) forControlEvents:UIControlEventTouchUpInside];
             _buttonCamera.tintColor = [UIColor whiteColor];
             _buttonCamera.frame = CGRectMake(CGRectGetMaxX(self.bounds)-40-5, 0, 40, 40);
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
 -(void)setDuration:(NSTimeInterval)duration
 {
     _duration = duration;
-    _labelDuration.text = [NSString timeStringForTimeInterval:duration forceIncludeHours:YES];
+    _labelDuration.text = [NSString timeStringForTimeInterval:duration maximumDuration:_maximumDuration forceIncludeHours:NO];
 }
 
 -(void)setFileSize:(long long)fileSize
@@ -308,21 +308,21 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
     switch (self.torchMode) {
         case AVCaptureTorchModeOn:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlash.tintColor = self.buttonFlashOn.tintColor = [UIColor yellowColor];
             self.buttonFlashAuto.tintColor = self.buttonFlashOff.tintColor = [UIColor whiteColor];
         }
             break;
         case AVCaptureTorchModeOff:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash_off"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash_off" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlashOff.tintColor = [UIColor yellowColor];
             self.buttonFlash.tintColor = self.buttonFlashAuto.tintColor = self.buttonFlashOn.tintColor = [UIColor whiteColor];
         }
             break;
         case AVCaptureTorchModeAuto:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlashAuto.tintColor = [UIColor yellowColor];
             self.buttonFlash.tintColor = self.buttonFlashOn.tintColor = self.buttonFlashOff.tintColor = [UIColor whiteColor];
         }
@@ -373,43 +373,45 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
 
 -(void)showHideSettings
 {
+    __weak typeof(self) weakSelf = self;
+    
     [UIView animateWithDuration:0.2 animations:^{
         
         //Flash
         {
-            if (_settingsShowType == IQVideoSettingsTypeFlash)
+            if (weakSelf.settingsShowType == IQVideoSettingsTypeFlash)
             {
-                _buttonFlashAuto.center = CGPointMake(CGRectGetMidX(_buttonFlash.frame)+80, _buttonFlash.center.y);
-                _buttonFlashOn.center = CGPointMake(CGRectGetMidX(_buttonFlashAuto.frame)+80, _buttonFlashAuto.center.y);
-                _buttonFlashOff.center = CGPointMake(CGRectGetMidX(_buttonFlashOn.frame)+80, _buttonFlashOn.center.y);
+                weakSelf.buttonFlashAuto.center = CGPointMake(CGRectGetMidX(weakSelf.buttonFlash.frame)+80, weakSelf.buttonFlash.center.y);
+                weakSelf.buttonFlashOn.center = CGPointMake(CGRectGetMidX(weakSelf.buttonFlashAuto.frame)+80, weakSelf.buttonFlashAuto.center.y);
+                weakSelf.buttonFlashOff.center = CGPointMake(CGRectGetMidX(weakSelf.buttonFlashOn.frame)+80, weakSelf.buttonFlashOn.center.y);
             }
             else
             {
-                _buttonFlashAuto.center = _buttonFlashOn.center = _buttonFlashOff.center = _buttonFlash.center;
+                weakSelf.buttonFlashAuto.center = weakSelf.buttonFlashOn.center = weakSelf.buttonFlashOff.center = weakSelf.buttonFlash.center;
             }
             
-            self.buttonFlashAuto.alpha = (_settingsShowType == IQVideoSettingsTypeFlash);
-            self.buttonFlashOn.alpha = (_settingsShowType == IQVideoSettingsTypeFlash);
-            self.buttonFlashOff.alpha = (_settingsShowType == IQVideoSettingsTypeFlash);
+            weakSelf.buttonFlashAuto.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeFlash);
+            weakSelf.buttonFlashOn.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeFlash);
+            weakSelf.buttonFlashOff.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeFlash);
         }
         
         //Quality
         {
-            if (_settingsShowType == IQVideoSettingsTypeQuality)
+            if (weakSelf.settingsShowType == IQVideoSettingsTypeQuality)
             {
-                _buttonVideoQuality.frame = CGRectMake(0, 0, 60, 40);
+                weakSelf.buttonVideoQuality.frame = CGRectMake(0, 0, 60, 40);
             }
             else
             {
-                _buttonVideoQuality.frame = CGRectMake(CGRectGetMaxX(_buttonFlash.frame), 0, 60, 40);
+                weakSelf.buttonVideoQuality.frame = CGRectMake(CGRectGetMaxX(weakSelf.buttonFlash.frame), 0, 60, 40);
             }
         }
 
-        self.buttonCamera.alpha = _hasCamera && (_settingsShowType == IQVideoSettingsTypeDefault);
-        self.buttonFlash.alpha = _hasTorch && ((_settingsShowType == IQVideoSettingsTypeDefault) || (_settingsShowType == IQVideoSettingsTypeFlash));
-        self.buttonVideoQuality.alpha = (_settingsShowType == IQVideoSettingsTypeDefault) || (_settingsShowType == IQVideoSettingsTypeQuality);
-        self.labelDuration.alpha = (_settingsShowType == IQVideoSettingsTypeDefault);
-        self.qualityPickerView.alpha = (_settingsShowType == IQVideoSettingsTypeQuality);
+        weakSelf.buttonCamera.alpha = weakSelf.hasCamera && (weakSelf.settingsShowType == IQVideoSettingsTypeDefault);
+        weakSelf.buttonFlash.alpha = weakSelf.hasTorch && ((weakSelf.settingsShowType == IQVideoSettingsTypeDefault) || (weakSelf.settingsShowType == IQVideoSettingsTypeFlash));
+        weakSelf.buttonVideoQuality.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeDefault) || (weakSelf.settingsShowType == IQVideoSettingsTypeQuality);
+        weakSelf.labelDuration.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeDefault);
+        weakSelf.qualityPickerView.alpha = (weakSelf.settingsShowType == IQVideoSettingsTypeQuality);
     }];
 }
 

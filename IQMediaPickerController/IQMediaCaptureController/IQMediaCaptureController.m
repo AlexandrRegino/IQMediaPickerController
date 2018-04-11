@@ -28,7 +28,6 @@
 #import "IQFileManager.h"
 #import "IQAKPickerView.h"
 #import "IQBottomContainerView.h"
-#import "IQMediaPickerControllerConstants.h"
 #import "DBCameraButton.h"
 #import "IQSettingsContainerView.h"
 #import "IQSelectedMediaViewController.h"
@@ -1327,6 +1326,7 @@
         _settingsContainerView.backgroundColor = [UIColor colorWithWhite:0 alpha:1];
         _settingsContainerView.photoSettingsView.delegate = self;
         _settingsContainerView.videoSettingsView.delegate = self;
+        _settingsContainerView.videoSettingsView.maximumDuration = self.videoMaximumDuration;
         _settingsContainerView.audioSettingsView.delegate = self;
     }
     

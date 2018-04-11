@@ -47,7 +47,7 @@
     self = [super init];
     if (self) {
         self.title = @"Compilations";
-        self.tabBarItem.image = [UIImage imageNamed:@"compilations"];
+        self.tabBarItem.image = [UIImage imageNamed:@"compilations" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
 }

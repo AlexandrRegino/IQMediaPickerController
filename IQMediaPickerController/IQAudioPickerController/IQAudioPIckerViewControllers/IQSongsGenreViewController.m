@@ -48,7 +48,7 @@
     self = [super init];
     if (self) {
         self.title = @"Genre";
-        self.tabBarItem.image = [UIImage imageNamed:@"genre"];
+        self.tabBarItem.image = [UIImage imageNamed:@"genre" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
 }

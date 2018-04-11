@@ -35,6 +35,8 @@ extern NSString *const IQMediaTypeAudio;
 extern NSString *const IQMediaTypeVideo;
 extern NSString *const IQMediaTypeImage;
 
+extern NSString *const BundleIdentifier;
+
 typedef NS_ENUM(NSInteger, IQMediaPickerControllerSourceType) {
     IQMediaPickerControllerSourceTypeLibrary,
     IQMediaPickerControllerSourceTypeCameraMicrophone,

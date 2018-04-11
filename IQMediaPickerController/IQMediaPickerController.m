@@ -26,7 +26,6 @@
 #import "IQMediaCaptureController.h"
 #import "IQAssetsPickerController.h"
 #import "IQAudioPickerController.h"
-#import "IQMediaPickerControllerConstants.h"
 #import "IQCaptureSession.h"
 
 @interface IQMediaPickerController ()<IQMediaCaptureControllerDelegate,IQAssetsPickerControllerDelegate,IQAudioPickerControllerDelegate,UITabBarControllerDelegate>

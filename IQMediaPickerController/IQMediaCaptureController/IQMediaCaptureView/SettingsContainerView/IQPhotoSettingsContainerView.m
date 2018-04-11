@@ -97,7 +97,7 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
         //Camera
         {
             _buttonCamera = [UIButton buttonWithType:UIButtonTypeSystem];
-            [_buttonCamera setImage:[UIImage imageNamed:@"IQ_camera_switch"] forState:UIControlStateNormal];
+            [_buttonCamera setImage:[UIImage imageNamed:@"IQ_camera_switch" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             [_buttonCamera addTarget:self action:@selector(cameraAction:) forControlEvents:UIControlEventTouchUpInside];
             _buttonCamera.tintColor = [UIColor whiteColor];
             _buttonCamera.frame = CGRectMake(CGRectGetMaxX(self.bounds)-40-5, 0, 40, 40);
@@ -244,21 +244,21 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
     switch (self.flashMode) {
         case AVCaptureFlashModeOn:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlash.tintColor = self.buttonFlashOn.tintColor = [UIColor yellowColor];
             self.buttonFlashAuto.tintColor = self.buttonFlashOff.tintColor = [UIColor whiteColor];
         }
             break;
         case AVCaptureFlashModeOff:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash_off"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash_off" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlashOff.tintColor = [UIColor yellowColor];
             self.buttonFlash.tintColor = self.buttonFlashAuto.tintColor = self.buttonFlashOn.tintColor = [UIColor whiteColor];
         }
             break;
         case AVCaptureFlashModeAuto:
         {
-            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash"] forState:UIControlStateNormal];
+            [self.buttonFlash setImage:[UIImage imageNamed:@"IQ_camera_flash" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             self.buttonFlashAuto.tintColor = [UIColor yellowColor];
             self.buttonFlash.tintColor = self.buttonFlashOn.tintColor = self.buttonFlashOff.tintColor = [UIColor whiteColor];
         }

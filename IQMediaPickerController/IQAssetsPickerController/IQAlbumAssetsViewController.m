@@ -29,7 +29,6 @@
 #import "IQAlbumAssetsViewController.h"
 #import "IQAssetsCell.h"
 #import "IQAssetsPickerController.h"
-#import "IQMediaPickerControllerConstants.h"
 
 @interface IQAlbumAssetsViewController () <UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 {

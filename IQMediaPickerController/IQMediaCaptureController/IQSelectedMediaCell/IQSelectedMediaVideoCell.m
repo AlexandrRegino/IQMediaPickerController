@@ -26,6 +26,7 @@
 
 #import "IQSelectedMediaVideoCell.h"
 #import "NSString+IQTimeIntervalFormatter.h"
+#import "IQMediaPickerControllerConstants.h"
 
 @interface IQSelectedMediaVideoCell ()
 
@@ -49,7 +50,7 @@
         self.imageViewPreview.contentMode = UIViewContentModeScaleAspectFill;
         [self.contentView addSubview:self.imageViewPreview];
         
-        self.imageViewPlay = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"IQ_control_video_play"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        self.imageViewPlay = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"IQ_control_video_play" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
         self.imageViewPlay.tintColor = [UIColor whiteColor];
         self.imageViewPlay.layer.shadowColor = [UIColor blackColor].CGColor;
         self.imageViewPlay.layer.shadowOffset = CGSizeZero;
@@ -121,7 +122,7 @@
     {
         NSTimeInterval durationInSeconds = CMTimeGetSeconds(asset.duration);
         
-        self.labelDuration.text = [NSString stringWithFormat:@"  %@",[NSString timeStringForTimeInterval:durationInSeconds forceIncludeHours:NO]];
+        self.labelDuration.text = [NSString stringWithFormat:@"  %@",[NSString timeStringForTimeInterval:durationInSeconds maximumDuration:0 forceIncludeHours:NO]];
         
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]initWithAsset:asset];
         imageGenerator.appliesPreferredTrackTransform = YES;
