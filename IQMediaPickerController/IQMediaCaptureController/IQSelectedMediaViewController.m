@@ -73,15 +73,15 @@
     
     if (self.mediaCaptureController.allowsCapturingMultipleItems)
     {
-        retakeItem = [[UIBarButtonItem alloc] initWithTitle:@"Take more" style:UIBarButtonItemStyleDone target:self action:@selector(takeMoreAction:)];
+        retakeItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Take more", @"") style:UIBarButtonItemStyleDone target:self action:@selector(takeMoreAction:)];
     }
     else
     {
-        retakeItem = [[UIBarButtonItem alloc] initWithTitle:@"Retake" style:UIBarButtonItemStyleDone target:self action:@selector(retakeAction:)];
+        retakeItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Retake", @"") style:UIBarButtonItemStyleDone target:self action:@selector(retakeAction:)];
     }
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *selectItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    UIBarButtonItem *selectItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     
     self.toolbarItems = @[retakeItem,flexItem,selectItem];
 }
@@ -93,7 +93,7 @@
     [self.navigationController setToolbarHidden:NO animated:animated];
 
     NSUInteger itemCount = self.arrayImagesAttribute.count + self.videoURLs.count + self.audioURLs.count;
-    self.navigationItem.title = [NSString stringWithFormat:@"%lu selected",(unsigned long)itemCount];
+    self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"%lu selected", @""),(unsigned long)itemCount];
 
     NSInteger section = [self.collectionView numberOfSections] - 1;
     NSInteger item = [self.collectionView numberOfItemsInSection:section] - 1;
@@ -178,7 +178,7 @@
         NSUInteger index = indexPath.item;
         [self.arrayImagesAttribute removeObjectAtIndex:index];
         NSUInteger itemCount = self.arrayImagesAttribute.count + self.videoURLs.count + self.audioURLs.count;
-        self.navigationItem.title = [NSString stringWithFormat:@"%lu selected",(unsigned long)itemCount];
+        self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"%lu selected", @""),(unsigned long)itemCount];
         [collectionView deleteItemsAtIndexPaths:@[indexPath]];
     }
     //Video
@@ -187,7 +187,7 @@
         NSUInteger index = indexPath.item - self.arrayImagesAttribute.count;
         [self.videoURLs removeObjectAtIndex:index];
         NSUInteger itemCount = self.arrayImagesAttribute.count + self.videoURLs.count + self.audioURLs.count;
-        self.navigationItem.title = [NSString stringWithFormat:@"%lu selected",(unsigned long)itemCount];
+        self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"%lu selected", @""),(unsigned long)itemCount];
         [collectionView deleteItemsAtIndexPaths:@[indexPath]];
     }
     //Audio
@@ -196,7 +196,7 @@
         NSUInteger index = indexPath.item - self.arrayImagesAttribute.count - self.videoURLs.count;
         [self.audioURLs removeObjectAtIndex:index];
         NSUInteger itemCount = self.arrayImagesAttribute.count + self.videoURLs.count + self.audioURLs.count;
-        self.navigationItem.title = [NSString stringWithFormat:@"%lu selected",(unsigned long)itemCount];
+        self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"%lu selected", @""),(unsigned long)itemCount];
         [collectionView deleteItemsAtIndexPaths:@[indexPath]];
     }
 }

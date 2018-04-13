@@ -927,7 +927,7 @@
     
     if (connection == nil)
     {
-        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:@"Can't take picture" forKey:NSLocalizedDescriptionKey]];
+        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Can't take picture", @"") forKey:NSLocalizedDescriptionKey]];
         
         if ([self.delegate respondsToSelector:@selector(captureSession:didFinishMediaWithInfo:error:)])
         {
@@ -936,7 +936,7 @@
     }
     else if (_stillImageOutput.capturingStillImage)
     {
-        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:@"Taking picture is in progress" forKey:NSLocalizedDescriptionKey]];
+        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Taking picture is in progress", @"") forKey:NSLocalizedDescriptionKey]];
         
         if ([self.delegate respondsToSelector:@selector(captureSession:didFinishMediaWithInfo:error:)])
         {
@@ -1063,7 +1063,7 @@
 
     if (connection == nil)
     {
-        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:@"Can't record video" forKey:NSLocalizedDescriptionKey]];
+        NSError *error = [NSError errorWithDomain:NSStringFromClass([self class]) code:0 userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Can't record video", @"") forKey:NSLocalizedDescriptionKey]];
         
         if ([self.delegate respondsToSelector:@selector(captureSession:didFinishMediaWithInfo:error:)])
         {

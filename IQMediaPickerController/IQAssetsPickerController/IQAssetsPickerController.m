@@ -50,17 +50,17 @@
     
     _selectedItems = [[NSMutableArray alloc] init];
 
-    [self.navigationItem setTitle:@"Albums"];
+    [self.navigationItem setTitle:NSLocalizedString(@"Albums", @"")];
     
-    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     
-    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
+    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
     [self.navigationItem setLeftBarButtonItem:self.cancelBarButton];
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.selectedMediaCountItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:@"999 media selected"];
+    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedString(@"999 media selected", @"")];
     self.selectedMediaCountItem.enabled = NO;
     
     self.toolbarItems = @[flexItem,self.selectedMediaCountItem,flexItem];
@@ -111,8 +111,8 @@
         // Group Enumerator Failure Block
         void (^assetGroupEnumberatorFailure)(NSError *) = ^(NSError *error) {
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error!" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error!", @"") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"") style:UIAlertActionStyleDefault handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         };
         
@@ -141,11 +141,11 @@
 
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        NSString *finalText = [NSString stringWithFormat:@"%lu Media selected",(unsigned long)[self.selectedItems count]];
+        NSString *finalText = [NSString stringWithFormat:NSLocalizedString(@"%lu Media selected", @""), (unsigned long)[self.selectedItems count]];
         
         if (self.maximumItemCount > 0)
         {
-            finalText = [finalText stringByAppendingFormat:@" (%lu maximum) ",(unsigned long)self.maximumItemCount];
+            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedString(@"%lu maximum", @""), (unsigned long)self.maximumItemCount]];
         }
 
         self.selectedMediaCountItem.title = finalText;
@@ -271,20 +271,20 @@
         
         if (photos > 0)
         {
-            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@",(unsigned long)photos, photos>1?@"Photos":@"Photo"]];
+            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)photos, photos > 1 ? NSLocalizedString(@"Photos", @"") : NSLocalizedString(@"Photo", @"")]];
         }
         else
         {
-            [stringsArray addObject:@"No photos"];
+            [stringsArray addObject:NSLocalizedString(@"No photos", @"")];
         }
 
         if (videos > 0)
         {
-            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@",(unsigned long)videos, videos>1?@"Videos":@"Video"]];
+            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)videos, videos > 1 ? NSLocalizedString(@"Videos", @"") : NSLocalizedString(@"Video", @"")]];
         }
         else
         {
-            [stringsArray addObject:@"No videos"];
+            [stringsArray addObject:NSLocalizedString(@"No videos", @"")];
         }
         
         cell.labelSubTitle.text = [stringsArray componentsJoinedByString:@", "];
@@ -296,11 +296,11 @@
 
         if (photos > 0)
         {
-            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)photos, photos>1?@"Photos":@"Photo"];
+            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)photos, photos > 1 ? NSLocalizedString(@"Photos", @"") : NSLocalizedString(@"Photo", @"")];
         }
         else
         {
-            cell.labelSubTitle.text = @"No photos";
+            cell.labelSubTitle.text = NSLocalizedString(@"No photos", @"");
         }
     }
     else if ([self.mediaTypes containsObject:@(IQMediaPickerControllerMediaTypeVideo)])
@@ -310,11 +310,11 @@
 
         if (videos > 0)
         {
-            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)videos, videos>1?@"Videos":@"Video"];
+            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)videos, videos > 1 ? NSLocalizedString(@"Videos", @"") : NSLocalizedString(@"Video", @"")];
         }
         else
         {
-            cell.labelSubTitle.text = @"No videos";
+            cell.labelSubTitle.text = NSLocalizedString(@"No videos", @"");
         }
     }
     

@@ -231,11 +231,11 @@
     self.buttonSelect.hidden = count == 0;
     if (count)
     {
-        [self.buttonSelect setTitle:[NSString stringWithFormat:@"%ld Selected",count] forState:UIControlStateNormal];
+        [self.buttonSelect setTitle:[NSString stringWithFormat:NSLocalizedString(@"%ld Selected", @""), count] forState:UIControlStateNormal];
     }
     else
     {
-        [self.buttonSelect setTitle:[NSString stringWithFormat:@"Select"] forState:UIControlStateNormal];
+        [self.buttonSelect setTitle:[NSString stringWithFormat:NSLocalizedString(@"Select", @"")] forState:UIControlStateNormal];
     }
     
     [self session].delegate = self;
@@ -1271,19 +1271,19 @@
                 self.buttonSelect.hidden = count == 0;
                 if (count)
                 {
-                    [self.buttonSelect setTitle:[NSString stringWithFormat:@"%ld Selected",count] forState:UIControlStateNormal];
+                    [self.buttonSelect setTitle:[NSString stringWithFormat:NSLocalizedString(@"%ld Selected", @""), count] forState:UIControlStateNormal];
                 }
                 else
                 {
-                    [self.buttonSelect setTitle:[NSString stringWithFormat:@"Select"] forState:UIControlStateNormal];
+                    [self.buttonSelect setTitle:[NSString stringWithFormat:NSLocalizedString(@"Select", @"")] forState:UIControlStateNormal];
                 }
             }
         }
     }
     else
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error!" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error!", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"") style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -1303,17 +1303,17 @@
     {
         case IQMediaCaptureControllerCaptureModePhoto:
         {
-            return @"PHOTO";
+            return NSLocalizedString(@"PHOTO", @"");
         }
             break;
         case IQMediaCaptureControllerCaptureModeVideo:
         {
-            return @"VIDEO";
+            return NSLocalizedString(@"VIDEO", @"");
         }
             break;
         case IQMediaCaptureControllerCaptureModeAudio:
         {
-            return @"AUDIO";
+            return NSLocalizedString(@"AUDIO", @"");
         }
             break;
             
@@ -1411,7 +1411,7 @@
         _buttonCancel = [UIButton buttonWithType:UIButtonTypeSystem];
         _buttonCancel.tintColor = [UIColor whiteColor];
         [_buttonCancel.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
-        [_buttonCancel setTitle:@"Cancel" forState:UIControlStateNormal];
+        [_buttonCancel setTitle:NSLocalizedString(@"Cancel", @"") forState:UIControlStateNormal];
         [_buttonCancel addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -1425,7 +1425,7 @@
         _buttonRetake = [UIButton buttonWithType:UIButtonTypeSystem];
         _buttonRetake.tintColor = [UIColor whiteColor];
         [_buttonRetake.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
-        [_buttonRetake setTitle:@"Retake" forState:UIControlStateNormal];
+        [_buttonRetake setTitle:NSLocalizedString(@"Retake", @"") forState:UIControlStateNormal];
         [_buttonRetake addTarget:self action:@selector(retakeAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -1453,7 +1453,7 @@
         [_buttonSelect.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
         _buttonSelect.titleLabel.minimumScaleFactor = 0.5;
         _buttonSelect.titleLabel.adjustsFontSizeToFitWidth = YES;
-        [_buttonSelect setTitle:@"Select" forState:UIControlStateNormal];
+        [_buttonSelect setTitle:NSLocalizedString(@"Select", @"") forState:UIControlStateNormal];
         [_buttonSelect setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_buttonSelect addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -1469,7 +1469,7 @@
         [_buttonUseVideo.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
         _buttonUseVideo.titleLabel.minimumScaleFactor = 0.5;
         _buttonUseVideo.titleLabel.adjustsFontSizeToFitWidth = YES;
-        [_buttonUseVideo setTitle:@"Use Video" forState:UIControlStateNormal];
+        [_buttonUseVideo setTitle:NSLocalizedString(@"Use Video", @"") forState:UIControlStateNormal];
         [_buttonUseVideo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_buttonUseVideo addTarget:self action:@selector(useVideoAction:) forControlEvents:UIControlEventTouchUpInside];
     }

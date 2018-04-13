@@ -47,13 +47,13 @@
 {
     [super viewDidLoad];
     
-    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     self.navigationItem.rightBarButtonItem = self.doneBarButton;
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.selectedMediaCountItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:@"999 media selected"];
+    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedString(@"999 media selected", @"")];
     self.selectedMediaCountItem.enabled = NO;
     
     self.toolbarItems = @[flexItem,self.selectedMediaCountItem,flexItem];
@@ -109,11 +109,11 @@
         [self.navigationItem setRightBarButtonItem:self.doneBarButton animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        NSString *finalText = [NSString stringWithFormat:@"%lu Media selected",(unsigned long)[self.assetController.selectedItems count]];
+        NSString *finalText = [NSString stringWithFormat:NSLocalizedString(@"%lu Media selected", @""), (unsigned long)[self.assetController.selectedItems count]];
         
         if (self.assetController.maximumItemCount > 0)
         {
-            finalText = [finalText stringByAppendingFormat:@" (%lu maximum) ",(unsigned long)self.assetController.maximumItemCount];
+            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedString(@"%lu maximum", @""), (unsigned long)self.assetController.maximumItemCount]];
         }
         self.selectedMediaCountItem.title = finalText;
     }

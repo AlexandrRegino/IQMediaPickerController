@@ -44,7 +44,7 @@
 {
     self = [super init];
     if (self) {
-        self.title = @"Songs";
+        self.title = NSLocalizedString(@"Songs", @"");
         self.tabBarItem.image = [UIImage imageNamed:@"songs" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
@@ -58,12 +58,12 @@
     [self.tableView registerClass:[IQSongsCell class] forCellReuseIdentifier:NSStringFromClass([IQSongsCell class])];
     [self.tableView registerClass:[IQSongsListTableHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([IQSongsListTableHeaderView class])];
 
-    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.selectedMediaCountItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:@"999 media selected"];
+    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedString(@"999 media selected", @"")];
     self.selectedMediaCountItem.enabled = NO;
     
     self.toolbarItems = @[flexItem,self.selectedMediaCountItem,flexItem];
@@ -80,7 +80,7 @@
     }
     else
     {
-        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
+        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
         [self.navigationItem setLeftBarButtonItem:cancelItem animated:animated];
     }
 
@@ -95,11 +95,11 @@
         
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        NSString *finalText = [NSString stringWithFormat:@"%lu Media selected",(unsigned long)[self.audioPickerController.selectedItems count]];
+        NSString *finalText = [NSString stringWithFormat:NSLocalizedString(@"%lu Media selected", @""), (unsigned long)[self.audioPickerController.selectedItems count]];
         
         if (self.audioPickerController.maximumItemCount > 0)
         {
-            finalText = [finalText stringByAppendingFormat:@" (%lu maximum) ",(unsigned long)self.audioPickerController.maximumItemCount];
+            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedString(@"%lu maximum", @""), (unsigned long)self.audioPickerController.maximumItemCount]];
         }
         
         self.selectedMediaCountItem.title = finalText;
@@ -282,13 +282,13 @@
 
         if (collection.items.count == 0)
         {
-            headerView.labelSubTitle.text = [NSString stringWithFormat:@"no songs"];
+            headerView.labelSubTitle.text = [NSString stringWithFormat:NSLocalizedString(@"no songs", @"")];
         }
         else
         {
             NSUInteger totalMinutes = [IQAudioPickerUtility mediaCollectionDuration:collection];
 
-            headerView.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@, %lu %@",(unsigned long)collection.count,(collection.count>1?@"songs":@"song"),(unsigned long)totalMinutes,(totalMinutes>1?@"mins":@"min")];
+            headerView.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@, %lu %@",(unsigned long)collection.count,(collection.count > 1 ? NSLocalizedString(@"songs", @"") : NSLocalizedString(@"song", @"")),(unsigned long)totalMinutes,(totalMinutes > 1 ? NSLocalizedString(@"mins", @"") : NSLocalizedString(@"min", @""))];
         }
         
         return headerView;

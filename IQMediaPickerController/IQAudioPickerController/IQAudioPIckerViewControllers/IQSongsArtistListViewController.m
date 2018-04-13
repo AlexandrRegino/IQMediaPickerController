@@ -46,7 +46,7 @@
 {
     self = [super init];
     if (self) {
-        self.title = @"Artists";
+        self.title = NSLocalizedString(@"Artists", @"");
         self.tabBarItem.image = [UIImage imageNamed:@"artists" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil];
     }
     return self;
@@ -64,15 +64,15 @@
     
     collections = [query collections];
 
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
     self.navigationItem.leftBarButtonItem = cancelItem;
     
-    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.selectedMediaCountItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:@"999 media selected"];
+    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedString(@"999 media selected", @"")];
     self.selectedMediaCountItem.enabled = NO;
     
     self.toolbarItems = @[flexItem,self.selectedMediaCountItem,flexItem];
@@ -93,11 +93,11 @@
         
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        NSString *finalText = [NSString stringWithFormat:@"%lu Media selected",(unsigned long)[self.audioPickerController.selectedItems count]];
+        NSString *finalText = [NSString stringWithFormat:NSLocalizedString(@"%lu Media selected", @""), (unsigned long)[self.audioPickerController.selectedItems count]];
         
         if (self.audioPickerController.maximumItemCount > 0)
         {
-            finalText = [finalText stringByAppendingFormat:@" (%lu maximum) ",(unsigned long)self.audioPickerController.maximumItemCount];
+            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedString(@"%lu maximum", @""), (unsigned long)self.audioPickerController.maximumItemCount]];
         }
         
         self.selectedMediaCountItem.title = finalText;
@@ -163,7 +163,7 @@
     NSUInteger albums = [[query collections] count];
     NSUInteger songs = [[query items] count];
 
-    cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@, %lu %@",(unsigned long)albums,(albums>1?@"albums":@"album"),(unsigned long)songs,(songs>1?@"songs":@"song")];
+    cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@, %lu %@",(unsigned long)albums,(albums > 1 ? NSLocalizedString(@"albums", @"") : NSLocalizedString(@"album", @"")), (unsigned long)songs, (songs > 1 ? NSLocalizedString(@"songs", @"") : NSLocalizedString(@"song", @""))];
 
     return cell;
 }
