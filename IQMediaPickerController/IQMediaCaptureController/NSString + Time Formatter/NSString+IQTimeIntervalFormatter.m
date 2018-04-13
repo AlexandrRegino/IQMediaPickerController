@@ -44,7 +44,7 @@
     }
     else
     {
-        return md ? [NSString stringWithFormat:@"%02li:%02li/%02li:%02li", minutes, seconds, mdMinutes, mdSeconds] : [NSString stringWithFormat:@"%02li:%02li/00:15", minutes, seconds];
+        return md ? [NSString stringWithFormat:@"%02li:%02li/%02li:%02li", minutes, seconds, mdMinutes, mdSeconds] : [NSString stringWithFormat:@"%02li:%02li", minutes, seconds];
     }
 }
 

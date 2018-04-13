@@ -31,8 +31,9 @@
 #import "DBCameraButton.h"
 #import "IQSettingsContainerView.h"
 #import "IQSelectedMediaViewController.h"
+#import <AVKit/AVKit.h>
 
-@interface IQMediaCaptureController ()<IQCaptureSessionDelegate,IQAKPickerViewDelegate,IQAKPickerViewDataSource,IQMediaViewDelegate,IQVideoSettingsContainerViewDelegate,IQPhotoSettingsContainerViewDelegate,IQAudioSettingsContainerViewDelegate>
+@interface IQMediaCaptureController () <IQCaptureSessionDelegate,IQAKPickerViewDelegate,IQAKPickerViewDataSource,IQMediaViewDelegate,IQVideoSettingsContainerViewDelegate,IQPhotoSettingsContainerViewDelegate,IQAudioSettingsContainerViewDelegate>
 {
     
     CADisplayLink *displayDuratioUpdate;
@@ -45,33 +46,20 @@
     BOOL _wasIdleTimerDisabled;
 }
 
-@property(nonatomic, readonly) NSArray<NSNumber*> *supportedCaptureModeForSession;
-@property(nonatomic, readonly) NSArray<NSNumber*> *allowedQualityForSession;
-
-@property(nonatomic, readonly) IQMediaView *mediaView;
-
-@property(nonatomic, readonly) IQSettingsContainerView *settingsContainerView;
-
-@property(nonatomic, readonly) IQBottomContainerView *bottomContainerView;
-
-@property(nonatomic, readonly) IQAKPickerView *mediaTypePickerView;
-
-@property(nonatomic, readonly) UIButton *buttonCancel, *buttonSelect;
-@property(nonatomic, readonly) DBCameraButton *buttonCapture;
-
-@property(nonatomic, readonly) IQCaptureSession *session;
+@property (strong, nonatomic) NSArray<NSNumber *> *supportedCaptureModeForSession;
+@property (strong, nonatomic) NSArray<NSNumber *> *allowedQualityForSession;
+@property (strong, nonatomic) IQMediaView *mediaView;
+@property (strong, nonatomic) IQSettingsContainerView *settingsContainerView;
+@property (strong, nonatomic) IQBottomContainerView *bottomContainerView;
+@property (strong, nonatomic) IQAKPickerView *mediaTypePickerView;
+@property (strong, nonatomic) UIButton *buttonCancel, *buttonSelect, *buttonRetake, *buttonUseVideo, *buttonPlayVideo;
+@property (strong, nonatomic) DBCameraButton *buttonCapture;
+@property (strong, nonatomic) IQCaptureSession *session;
+@property (strong, nonatomic) NSDictionary *mediaInfoDictionary;
 
 @end
 
 @implementation IQMediaCaptureController
-@synthesize session = _session;
-@synthesize mediaView = _mediaView;
-
-@synthesize settingsContainerView = _settingsContainerView;
-@synthesize mediaTypePickerView = _mediaTypePickerView, buttonCancel = _buttonCancel, buttonCapture = _buttonCapture;
-
-@synthesize bottomContainerView = _bottomContainerView;
-@synthesize buttonSelect = _buttonSelect;
 
 #pragma mark - Lifetime
 +(void)load
@@ -99,6 +87,9 @@
     _buttonCancel = nil;
     _buttonSelect = nil;
     _buttonCapture = nil;
+    _buttonRetake = nil;
+    _buttonUseVideo = nil;
+    _buttonPlayVideo = nil;
 }
 
 - (instancetype)init
@@ -233,12 +224,6 @@
 {
     [super viewWillAppear:animated];
     
-    //Alexandr's changes
-    videoURLs = [[NSMutableArray alloc] init];
-    audioURLs = [[NSMutableArray alloc] init];
-    arrayImagesAttribute = [[NSMutableArray alloc] init];
-    self.buttonSelect.hidden = YES;
-    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self.navigationController setToolbarHidden:YES animated:animated];
     
@@ -356,11 +341,11 @@
         }
         
         self.mediaView.previewSession = [self session].captureSession;
-    }
-
-    if ([[self session] isSessionRunning] == NO)
-    {
-        [[self session] startRunning];
+        
+        if ([[self session] isSessionRunning] == NO)
+        {
+            [[self session] startRunning];
+        }
     }
 }
 
@@ -879,6 +864,49 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)useVideoAction:(UIButton *)sender {
+    
+    [self.delegate mediaCaptureController:self didFinishMediaWithInfo:_mediaInfoDictionary];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)retakeAction:(UIButton *)sender {
+    
+    [videoURLs removeAllObjects];
+    [audioURLs removeAllObjects];
+    [arrayImagesAttribute removeAllObjects];
+    _mediaInfoDictionary = nil;
+    [self.bottomContainerView setLeftContentView:nil];
+    [self.bottomContainerView setRightContentView:nil];
+    [self.buttonPlayVideo setHidden:YES];
+    
+    [self.bottomContainerView setTopContentView:self.mediaTypePickerView];
+    [self.bottomContainerView setLeftContentView:self.buttonCancel];
+    [self.bottomContainerView setMiddleContentView:self.buttonCapture];
+    [self.settingsContainerView setHidden:NO];
+    
+    if ([[self session] isSessionRunning] == NO)
+    {
+        [[self session] startRunning];
+    }
+}
+
+- (void)playVideoAction:(UIButton *)sender {
+    
+    NSArray *videoMedias = [self.mediaInfoDictionary objectForKey:IQMediaTypeVideo];
+    NSURL *videoUrl = [[videoMedias lastObject] objectForKey:IQMediaURL];
+    
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:videoUrl];
+    AVPlayer *player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+    playerViewController.player = player;
+    playerViewController.view.frame = self.view.bounds;
+    [self presentViewController:playerViewController animated:YES completion:^{
+        [player play];
+    }];
+}
+
 //- (void)deleteAction:(UIButton *)sender
 //{
 //    NSURL *mediaURL = [videoURLs objectAtIndex:self.partitionBar.selectedIndex];
@@ -1114,7 +1142,7 @@
     self.settingsContainerView.audioSettingsView.fileSize = self.settingsContainerView.videoSettingsView.fileSize = 0;
 }
 
--(void)captureSession:(IQCaptureSession*)captureSession didFinishMediaWithInfo:(NSDictionary *)info error:(NSError*)error
+- (void)captureSession:(IQCaptureSession *)captureSession didFinishMediaWithInfo:(NSDictionary *)info error:(NSError*)error
 {
     //Resetting
     if (self.allowsCapturingMultipleItems == NO)
@@ -1176,25 +1204,37 @@
             
             if (self.allowsCapturingMultipleItems == NO)
             {
-                //Alexandr's changes
-//                IQSelectedMediaViewController *controller = [[IQSelectedMediaViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-//                controller.videoURLs = videoURLs;
-//                controller.audioURLs = audioURLs;
-//                controller.arrayImagesAttribute = arrayImagesAttribute;
-//                controller.mediaCaptureController = self;
-//                [self.navigationController pushViewController:controller animated:YES];
+                if ([[self session] isSessionRunning]) {
+                    
+                    [[self session] stopRunning];
+                }
                 
+                //Alexandr's changes
                 if ([self.delegate respondsToSelector:@selector(mediaCaptureController:didFinishMediaWithInfo:)])
                 {
                     NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
                     
-                    if ([arrayImagesAttribute count])
-                    {
+                    if ([arrayImagesAttribute count]) {
+                        
                         [info setObject:arrayImagesAttribute forKey:IQMediaTypeImage];
-                    }
-                    
-                    if ([videoURLs count])
-                    {
+                        
+                        [self.delegate mediaCaptureController:self didFinishMediaWithInfo:info];
+                        
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                        
+                    } else if ([videoURLs count]) {
+                        
+                        [self.settingsContainerView setHidden:YES];
+                        
+                        [self.bottomContainerView setLeftContentView:nil];
+                        [self.bottomContainerView setRightContentView:nil];
+                        [self.bottomContainerView setMiddleContentView:nil];
+                        [self.bottomContainerView setTopContentView:nil];
+                                                
+                        [self.bottomContainerView setLeftContentView:self.buttonRetake];
+                        [self.bottomContainerView setRightContentView:self.buttonUseVideo];
+                        [self.view addSubview:self.buttonPlayVideo];
+                        
                         NSMutableArray *videoMedias = [[NSMutableArray alloc] init];
                         
                         for (NSURL *videoURL in videoURLs)
@@ -1204,10 +1244,11 @@
                         }
                         
                         [info setObject:videoMedias forKey:IQMediaTypeVideo];
-                    }
+                        
+                        self.mediaInfoDictionary = info;
                     
-                    if ([audioURLs count])
-                    {
+                    } else if ([audioURLs count]) {
+                        
                         NSMutableArray *audioMedias = [[NSMutableArray alloc] init];
                         
                         for (NSURL *audioURL in audioURLs)
@@ -1217,12 +1258,12 @@
                         }
                         
                         [info setObject:audioMedias forKey:IQMediaTypeAudio];
+                        
+                        [self.delegate mediaCaptureController:self didFinishMediaWithInfo:info];
+                        
+                        [self dismissViewControllerAnimated:YES completion:nil];
                     }
-                    
-                    [self.delegate mediaCaptureController:self didFinishMediaWithInfo:info];
                 }
-                
-                [self dismissViewControllerAnimated:YES completion:nil];
             }
             else
             {
@@ -1363,10 +1404,10 @@
     return _mediaTypePickerView;
 }
 
--(UIButton *)buttonCancel
-{
-    if (_buttonCancel == nil)
-    {
+- (UIButton *)buttonCancel {
+    
+    if (_buttonCancel == nil) {
+        
         _buttonCancel = [UIButton buttonWithType:UIButtonTypeSystem];
         _buttonCancel.tintColor = [UIColor whiteColor];
         [_buttonCancel.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
@@ -1375,6 +1416,20 @@
     }
     
     return _buttonCancel;
+}
+
+- (UIButton *)buttonRetake {
+    
+    if (_buttonRetake == nil) {
+        
+        _buttonRetake = [UIButton buttonWithType:UIButtonTypeSystem];
+        _buttonRetake.tintColor = [UIColor whiteColor];
+        [_buttonRetake.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
+        [_buttonRetake setTitle:@"Retake" forState:UIControlStateNormal];
+        [_buttonRetake addTarget:self action:@selector(retakeAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _buttonRetake;
 }
 
 -(DBCameraButton *)buttonCapture
@@ -1390,8 +1445,8 @@
     return _buttonCapture;
 }
 
--(UIButton *)buttonSelect
-{
+- (UIButton *)buttonSelect {
+    
     if (_buttonSelect == nil)
     {
         _buttonSelect = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1406,9 +1461,39 @@
     return _buttonSelect;
 }
 
+- (UIButton *)buttonUseVideo {
+    
+    if (_buttonUseVideo == nil) {
+        
+        _buttonUseVideo = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_buttonUseVideo.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
+        _buttonUseVideo.titleLabel.minimumScaleFactor = 0.5;
+        _buttonUseVideo.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [_buttonUseVideo setTitle:@"Use Video" forState:UIControlStateNormal];
+        [_buttonUseVideo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_buttonUseVideo addTarget:self action:@selector(useVideoAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _buttonUseVideo;
+}
+
+- (UIButton *)buttonPlayVideo {
+    
+    if (_buttonPlayVideo == nil) {
+        
+        _buttonPlayVideo = [UIButton buttonWithType:UIButtonTypeCustom];
+        _buttonPlayVideo.frame = CGRectMake(0, 0, 70, 70);
+        _buttonPlayVideo.center = CGPointMake(self.view.center.x, self.view.center.y);
+        [_buttonPlayVideo setImage:[UIImage imageNamed:@"video_play" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+        [_buttonPlayVideo addTarget:self action:@selector(playVideoAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _buttonPlayVideo;
+}
+
 #pragma mark - Temporary path
-+(NSString*)temporaryVideoStoragePath
-{
++ (NSString *)temporaryVideoStoragePath {
+    
     NSString *videoPath = [[IQFileManager IQDocumentDirectory] stringByAppendingString:@"IQVideo/"];
     
     if([[NSFileManager defaultManager] fileExistsAtPath:videoPath] == NO)
