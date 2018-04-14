@@ -152,9 +152,9 @@
 		C035C22519A8B5BE0072C2C0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C035C22619A8B5BE0072C2C0 /* MediaPickerController-Info.plist */,
 				C035C22719A8B5BE0072C2C0 /* InfoPlist.strings */,
 				C035C22A19A8B5BE0072C2C0 /* main.m */,
+				C035C22619A8B5BE0072C2C0 /* MediaPickerController-Info.plist */,
 				C035C22C19A8B5BE0072C2C0 /* MediaPickerController-Prefix.pch */,
 			);
 			name = "Supporting Files";
