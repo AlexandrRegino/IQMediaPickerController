@@ -1308,9 +1308,7 @@
             break;
         case IQMediaCaptureControllerCaptureModeVideo:
         {
-            NSBundle *bundle = [NSBundle bundleWithIdentifier:BundleIdentifier];
-            NSString *localizedString = NSLocalizedStringFromTableInBundle(@"VIDEO", TargetIdentifier, bundle, @"");
-            return localizedString;
+            return NSLocalizedStringFromTableInBundle(@"VIDEO", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"");
         }
             break;
         case IQMediaCaptureControllerCaptureModeAudio:
