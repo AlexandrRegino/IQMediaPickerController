@@ -19,7 +19,10 @@
     "IQMediaPickerController/IQMediaPickerController.h",
     "IQMediaPickerController/IQMediaPickerControllerConstants.h"
   ],
-  "resources": {"IQMediaPickerController/**/*.{xcassets}", "IQMediaPickerController/Localizable/*.{lproj}"},
+  "resources": [
+    "IQMediaPickerController/**/*.{xcassets}", 
+    "IQMediaPickerController/Localizable/*.{lproj}"
+  ],
   "dependencies": {
     "DBCameraButton": [],
     "SCSiriWaveformView": []
