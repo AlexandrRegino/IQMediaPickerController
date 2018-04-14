@@ -125,6 +125,7 @@
     [self.bottomContainerView setLeftContentView:self.buttonCancel];
     [self.bottomContainerView setMiddleContentView:self.buttonCapture];
     [self.bottomContainerView setRightContentView:self.buttonSelect];
+    [self.view addSubview:self.buttonPlayVideo];
 
     //Constraints
     {
@@ -341,6 +342,12 @@
         }
         
         self.mediaView.previewSession = [self session].captureSession;
+        
+        if ([[self session] isSessionRunning] == NO)
+        {
+            [[self session] startRunning];
+        }
+    } else if (self.allowsCapturingMultipleItems == YES) {
         
         if ([[self session] isSessionRunning] == NO)
         {
@@ -1233,7 +1240,7 @@
                                                 
                         [self.bottomContainerView setLeftContentView:self.buttonRetake];
                         [self.bottomContainerView setRightContentView:self.buttonUseVideo];
-                        [self.view addSubview:self.buttonPlayVideo];
+                        [self.buttonPlayVideo setHidden:NO];
                         
                         NSMutableArray *videoMedias = [[NSMutableArray alloc] init];
                         
@@ -1486,6 +1493,7 @@
         _buttonPlayVideo.center = CGPointMake(self.view.center.x, self.view.center.y);
         [_buttonPlayVideo setImage:[UIImage imageNamed:@"video_play" inBundle:[NSBundle bundleWithIdentifier:BundleIdentifier] compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         [_buttonPlayVideo addTarget:self action:@selector(playVideoAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_buttonPlayVideo setHidden:YES];
     }
     
     return _buttonPlayVideo;
