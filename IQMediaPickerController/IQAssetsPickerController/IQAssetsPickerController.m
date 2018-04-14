@@ -50,17 +50,17 @@
     
     _selectedItems = [[NSMutableArray alloc] init];
 
-    [self.navigationItem setTitle:NSLocalizedString(@"Albums", @"")];
+    [self.navigationItem setTitle:NSLocalizedStringFromTableInBundle(@"Albums", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
     
-    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
+    self.doneBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Done", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
     
-    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"") style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
+    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") style:UIBarButtonItemStyleDone target:self action:@selector(cancelAction:)];
     [self.navigationItem setLeftBarButtonItem:self.cancelBarButton];
     
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.selectedMediaCountItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedString(@"999 media selected", @"")];
+    self.selectedMediaCountItem.possibleTitles = [NSSet setWithObject:NSLocalizedStringFromTableInBundle(@"999 media selected", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
     self.selectedMediaCountItem.enabled = NO;
     
     self.toolbarItems = @[flexItem,self.selectedMediaCountItem,flexItem];
@@ -111,8 +111,8 @@
         // Group Enumerator Failure Block
         void (^assetGroupEnumberatorFailure)(NSError *) = ^(NSError *error) {
             
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error!", @"") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"") style:UIAlertActionStyleDefault handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTableInBundle(@"Error!", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"OK", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") style:UIAlertActionStyleDefault handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         };
         
@@ -141,11 +141,11 @@
 
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        NSString *finalText = [NSString stringWithFormat:NSLocalizedString(@"%lu Media selected", @""), (unsigned long)[self.selectedItems count]];
+        NSString *finalText = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%lu Media selected", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @""), (unsigned long)[self.selectedItems count]];
         
         if (self.maximumItemCount > 0)
         {
-            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedString(@"%lu maximum", @""), (unsigned long)self.maximumItemCount]];
+            finalText = [finalText stringByAppendingFormat:@" (%@) ", [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%lu maximum", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @""), (unsigned long)self.maximumItemCount]];
         }
 
         self.selectedMediaCountItem.title = finalText;
@@ -271,20 +271,20 @@
         
         if (photos > 0)
         {
-            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)photos, photos > 1 ? NSLocalizedString(@"Photos", @"") : NSLocalizedString(@"Photo", @"")]];
+            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)photos, photos > 1 ? NSLocalizedStringFromTableInBundle(@"Photos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") : NSLocalizedStringFromTableInBundle(@"Photo", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")]];
         }
         else
         {
-            [stringsArray addObject:NSLocalizedString(@"No photos", @"")];
+            [stringsArray addObject:NSLocalizedStringFromTableInBundle(@"No photos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
         }
 
         if (videos > 0)
         {
-            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)videos, videos > 1 ? NSLocalizedString(@"Videos", @"") : NSLocalizedString(@"Video", @"")]];
+            [stringsArray addObject:[NSString stringWithFormat:@"%lu %@", (unsigned long)videos, videos > 1 ? NSLocalizedStringFromTableInBundle(@"Videos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") : NSLocalizedStringFromTableInBundle(@"Video", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")]];
         }
         else
         {
-            [stringsArray addObject:NSLocalizedString(@"No videos", @"")];
+            [stringsArray addObject:NSLocalizedStringFromTableInBundle(@"No videos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
         }
         
         cell.labelSubTitle.text = [stringsArray componentsJoinedByString:@", "];
@@ -296,11 +296,11 @@
 
         if (photos > 0)
         {
-            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)photos, photos > 1 ? NSLocalizedString(@"Photos", @"") : NSLocalizedString(@"Photo", @"")];
+            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)photos, photos > 1 ? NSLocalizedStringFromTableInBundle(@"Photos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") : NSLocalizedStringFromTableInBundle(@"Photo", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
         }
         else
         {
-            cell.labelSubTitle.text = NSLocalizedString(@"No photos", @"");
+            cell.labelSubTitle.text = NSLocalizedStringFromTableInBundle(@"No photos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"");
         }
     }
     else if ([self.mediaTypes containsObject:@(IQMediaPickerControllerMediaTypeVideo)])
@@ -310,11 +310,11 @@
 
         if (videos > 0)
         {
-            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)videos, videos > 1 ? NSLocalizedString(@"Videos", @"") : NSLocalizedString(@"Video", @"")];
+            cell.labelSubTitle.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)videos, videos > 1 ? NSLocalizedStringFromTableInBundle(@"Videos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") : NSLocalizedStringFromTableInBundle(@"Video", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")];
         }
         else
         {
-            cell.labelSubTitle.text = NSLocalizedString(@"No videos", @"");
+            cell.labelSubTitle.text = NSLocalizedStringFromTableInBundle(@"No videos", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"");
         }
     }
     

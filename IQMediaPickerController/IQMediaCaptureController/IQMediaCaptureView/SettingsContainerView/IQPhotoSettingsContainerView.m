@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
             _buttonFlashAuto.alpha = 0;
             _buttonFlashAuto.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashAuto.tintColor = [UIColor whiteColor];
-            [_buttonFlashAuto setTitle:NSLocalizedString(@"Auto", @"") forState:UIControlStateNormal];
+            [_buttonFlashAuto setTitle:NSLocalizedStringFromTableInBundle(@"Auto", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             [_buttonFlashAuto sizeToFit];
             _buttonFlashAuto.frame = CGRectMake(CGRectGetMaxX(_buttonFlash.frame)+40, 0, CGRectGetWidth(_buttonFlashAuto.frame), 40);
             [self addSubview:_buttonFlashAuto];
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
             _buttonFlashOn.alpha = 0;
             _buttonFlashOn.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashOn.tintColor = [UIColor whiteColor];
-            [_buttonFlashOn setTitle:NSLocalizedString(@"On", @"") forState:UIControlStateNormal];
+            [_buttonFlashOn setTitle:NSLocalizedStringFromTableInBundle(@"On", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             [_buttonFlashOn sizeToFit];
             _buttonFlashOn.frame = CGRectMake(CGRectGetMaxX(_buttonFlashAuto.frame)+40, 0, CGRectGetWidth(_buttonFlashOn.frame), 40);
             [self addSubview:_buttonFlashOn];
@@ -88,7 +88,7 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
             _buttonFlashOff.alpha = 0;
             _buttonFlashOff.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashOff.tintColor = [UIColor whiteColor];
-            [_buttonFlashOff setTitle:NSLocalizedString(@"Off", @"") forState:UIControlStateNormal];
+            [_buttonFlashOff setTitle:NSLocalizedStringFromTableInBundle(@"Off", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             [_buttonFlashOff sizeToFit];
             _buttonFlashOff.frame = CGRectMake(CGRectGetMaxX(_buttonFlashOn.frame)+40, 0, CGRectGetWidth(_buttonFlashOff.frame), 40);
             [self addSubview:_buttonFlashOff];
@@ -146,15 +146,15 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
         {
             case IQCaptureSessionPresetPhoto:
             case IQCaptureSessionPresetHigh:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetPhoto),@"name":NSLocalizedString(@"HIGH", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetPhoto),@"name":NSLocalizedStringFromTableInBundle(@"HIGH", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetPhoto)];
                 break;
             case IQCaptureSessionPresetMedium:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetMedium),@"name":NSLocalizedString(@"MEDIUM", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetMedium),@"name":NSLocalizedStringFromTableInBundle(@"MEDIUM", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetMedium)];
                 break;
             case IQCaptureSessionPresetLow:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetLow),@"name":NSLocalizedString(@"LOW", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetLow),@"name":NSLocalizedStringFromTableInBundle(@"LOW", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetLow)];
                 break;
             case IQCaptureSessionPreset352x288:
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSUInteger, IQPhotoSettingsType) {
     
     if (sessionSupportedPreset.count == 0)
     {
-        [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetPhoto),@"name":NSLocalizedString(@"HIGH", @"")}];
+        [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetPhoto),@"name":NSLocalizedStringFromTableInBundle(@"HIGH", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
         [supportedPreset addObject:@(IQCaptureSessionPresetPhoto)];
     }
     

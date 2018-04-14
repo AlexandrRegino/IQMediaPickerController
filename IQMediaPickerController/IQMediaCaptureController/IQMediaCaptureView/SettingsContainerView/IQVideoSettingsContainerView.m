@@ -71,7 +71,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
             _buttonFlashAuto.alpha = 0;
             _buttonFlashAuto.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashAuto.tintColor = [UIColor whiteColor];
-            [_buttonFlashAuto setTitle:NSLocalizedString(@"Auto", @"") forState:UIControlStateNormal];
+            [_buttonFlashAuto setTitle:NSLocalizedStringFromTableInBundle(@"Auto", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             _buttonFlashAuto.frame = _buttonFlash.frame;
             [_buttonFlashAuto sizeToFit];
             CGRect rect = _buttonFlashAuto.frame;
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
             _buttonFlashOn.alpha = 0;
             _buttonFlashOn.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashOn.tintColor = [UIColor whiteColor];
-            [_buttonFlashOn setTitle:NSLocalizedString(@"On", @"") forState:UIControlStateNormal];
+            [_buttonFlashOn setTitle:NSLocalizedStringFromTableInBundle(@"On", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             _buttonFlashOn.frame = _buttonFlash.frame;
             [_buttonFlashOn sizeToFit];
             rect = _buttonFlashOn.frame;
@@ -99,7 +99,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
             _buttonFlashOff.alpha = 0;
             _buttonFlashOff.titleLabel.font = [UIFont systemFontOfSize:12];
             _buttonFlashOff.tintColor = [UIColor whiteColor];
-            [_buttonFlashOff setTitle:NSLocalizedString(@"Off", @"") forState:UIControlStateNormal];
+            [_buttonFlashOff setTitle:NSLocalizedStringFromTableInBundle(@"Off", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
             _buttonFlashOff.frame = _buttonFlash.frame;
             [_buttonFlashOff sizeToFit];
             rect = _buttonFlashOff.frame;
@@ -178,15 +178,15 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
         switch ([preset integerValue])
         {
             case IQCaptureSessionPresetHigh:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetHigh),@"name":NSLocalizedString(@"HIGH", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetHigh),@"name":NSLocalizedStringFromTableInBundle(@"HIGH", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetHigh)];
                 break;
             case IQCaptureSessionPresetMedium:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetMedium),@"name":NSLocalizedString(@"MEDIUM", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetMedium),@"name":NSLocalizedStringFromTableInBundle(@"MEDIUM", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetMedium)];
                 break;
             case IQCaptureSessionPresetLow:
-                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetLow),@"name":NSLocalizedString(@"LOW", @"")}];
+                [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetLow),@"name":NSLocalizedStringFromTableInBundle(@"LOW", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
                 [supportedPreset addObject:@(IQCaptureSessionPresetLow)];
                 break;
             case IQCaptureSessionPreset352x288:
@@ -222,7 +222,7 @@ typedef NS_ENUM(NSUInteger, IQVideoSettingsType) {
 
     if (sessionSupportedPreset.count == 0)
     {
-        [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetHigh),@"name":NSLocalizedString(@"HIGH", @"")}];
+        [sessionSupportedPreset addObject:@{@"quality":@(IQCaptureSessionPresetHigh),@"name":NSLocalizedStringFromTableInBundle(@"HIGH", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"")}];
         [supportedPreset addObject:@(IQCaptureSessionPresetHigh)];
     }
 

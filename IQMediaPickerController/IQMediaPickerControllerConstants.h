@@ -36,6 +36,7 @@ extern NSString *const IQMediaTypeVideo;
 extern NSString *const IQMediaTypeImage;
 
 extern NSString *const BundleIdentifier;
+extern NSString *const TargetIdentifier;
 
 typedef NS_ENUM(NSInteger, IQMediaPickerControllerSourceType) {
     IQMediaPickerControllerSourceTypeLibrary,

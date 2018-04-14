@@ -35,3 +35,4 @@ NSString *const IQMediaTypeVideo    =   @"IQMediaTypeVideo";
 NSString *const IQMediaTypeImage    =   @"IQMediaTypeImage";
 
 NSString *const BundleIdentifier    =   @"org.cocoapods.IQMediaPickerController";
+NSString *const TargetIdentifier    =   @"IQMediaPickerController";
