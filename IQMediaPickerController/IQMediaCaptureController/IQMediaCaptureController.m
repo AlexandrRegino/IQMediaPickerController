@@ -52,7 +52,7 @@
 @property (strong, nonatomic) IQSettingsContainerView *settingsContainerView;
 @property (strong, nonatomic) IQBottomContainerView *bottomContainerView;
 @property (strong, nonatomic) IQAKPickerView *mediaTypePickerView;
-@property (strong, nonatomic) UIButton *buttonCancel, *buttonSelect, *buttonRetake, *buttonUseVideo, *buttonPlayVideo;
+@property (strong, nonatomic) UIButton *buttonCancel, *buttonSelect, *buttonRetake, *buttonUseVideo, *buttonPlayVideo, *buttonCancelVideo;
 @property (strong, nonatomic) DBCameraButton *buttonCapture;
 @property (strong, nonatomic) IQCaptureSession *session;
 @property (strong, nonatomic) NSDictionary *mediaInfoDictionary;
@@ -90,6 +90,7 @@
     _buttonRetake = nil;
     _buttonUseVideo = nil;
     _buttonPlayVideo = nil;
+    _buttonCancelVideo = nil;
 }
 
 - (instancetype)init
@@ -886,6 +887,7 @@
     _mediaInfoDictionary = nil;
     [self.bottomContainerView setLeftContentView:nil];
     [self.bottomContainerView setRightContentView:nil];
+    [self.bottomContainerView setMiddleContentView:nil];
     [self.buttonPlayVideo setHidden:YES];
     
     [self.bottomContainerView setTopContentView:self.mediaTypePickerView];
@@ -912,6 +914,16 @@
     [self presentViewController:playerViewController animated:YES completion:^{
         [player play];
     }];
+}
+
+- (void)cancelVideoAction:(UIButton *)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if ([self.delegate respondsToSelector:@selector(mediaCaptureControllerDidCancel:)])
+    {
+        [self.delegate mediaCaptureControllerDidCancel:self];
+    }
 }
 
 //- (void)deleteAction:(UIButton *)sender
@@ -1239,6 +1251,7 @@
                         [self.bottomContainerView setTopContentView:nil];
                                                 
                         [self.bottomContainerView setLeftContentView:self.buttonRetake];
+                        [self.bottomContainerView setMiddleContentView:self.buttonCancelVideo];
                         [self.bottomContainerView setRightContentView:self.buttonUseVideo];
                         [self.buttonPlayVideo setHidden:NO];
                         
@@ -1499,7 +1512,22 @@
     return _buttonPlayVideo;
 }
 
+- (UIButton *)buttonCancelVideo {
+    
+    if (_buttonCancelVideo == nil) {
+        
+        _buttonCancelVideo = [UIButton buttonWithType:UIButtonTypeSystem];
+        _buttonCancelVideo.tintColor = [UIColor whiteColor];
+        [_buttonCancelVideo.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
+        [_buttonCancelVideo setTitle:NSLocalizedStringFromTableInBundle(@"Cancel", TargetIdentifier, [NSBundle bundleWithIdentifier:BundleIdentifier], @"") forState:UIControlStateNormal];
+        [_buttonCancelVideo addTarget:self action:@selector(cancelVideoAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _buttonCancel;
+}
+
 #pragma mark - Temporary path
+
 + (NSString *)temporaryVideoStoragePath {
     
     NSString *videoPath = [[IQFileManager IQDocumentDirectory] stringByAppendingString:@"IQVideo/"];
