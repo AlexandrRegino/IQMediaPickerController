@@ -213,6 +213,9 @@
         default:
             break;
     }
+    
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:[self session] action:@selector(handlePinchToZoomRecognizer:)];
+    [self.view addGestureRecognizer:pinchGesture];
 
     [self updateUI];
 }

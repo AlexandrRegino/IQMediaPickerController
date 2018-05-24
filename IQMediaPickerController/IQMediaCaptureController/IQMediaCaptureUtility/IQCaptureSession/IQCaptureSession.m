@@ -284,6 +284,29 @@
 
 #pragma mark - Methods
 
+- (void)handlePinchToZoomRecognizer:(UIPinchGestureRecognizer *)pinchRecognizer {
+    
+    const CGFloat pinchVelocityDividerFactor = 50.0f;
+    
+    AVCaptureDevice *videoDevice = _videoCaptureDeviceInput.device;
+    
+    if (pinchRecognizer.state == UIGestureRecognizerStateChanged) {
+        
+        NSError *error = nil;
+        if ([videoDevice lockForConfiguration:&error]) {
+            
+            CGFloat desiredZoomFactor = videoDevice.videoZoomFactor + atan2f(pinchRecognizer.velocity, pinchVelocityDividerFactor);
+            // Check if desiredZoomFactor fits required range from 1.0 to activeFormat.videoMaxZoomFactor
+            videoDevice.videoZoomFactor = MAX(1.0, MIN(desiredZoomFactor, videoDevice.activeFormat.videoMaxZoomFactor));
+            [videoDevice unlockForConfiguration];
+            
+        } else {
+            
+            NSLog(@"error: %@", error);
+        }
+    }
+}
+
 -(BOOL)addNewInputs:(NSArray*)newInputs
 {
     AVCaptureSession *session = self.captureSession;

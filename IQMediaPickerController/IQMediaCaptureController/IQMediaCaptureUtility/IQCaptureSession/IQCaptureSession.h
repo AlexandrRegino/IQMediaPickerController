@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger, IQCaptureSessionPreset) {
 - (CGPoint)focusPoint;
 - (CGPoint)exposurePoint;
 
+- (void)handlePinchToZoomRecognizer:(UIPinchGestureRecognizer *)pinchRecognizer;
 - (BOOL)setCaptureMode:(IQMediaCaptureControllerCaptureMode)captureMode;
 - (BOOL)setCameraPosition:(AVCaptureDevicePosition)cameraPosition;
 - (BOOL)setFlashMode:(AVCaptureFlashMode)flashMode;
